@@ -1,0 +1,9 @@
+.bg-guitar{
+    background: url('../../images/guitarist.jpg');
+    height: 50vh;
+    background-size: cover;
+}
+form{
+    max-width: 500px;
+    margin: 0 auto;
+}

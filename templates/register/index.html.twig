@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un compte{% endblock %}
+
+{% block body %}
+<h1 class="text-center">Créer un compte</h1>
+<form action="{{ path('app_register') }}" method="post">
+    <div class="mb-3">
+        <label for="username" class="form-label">Pseudo</label>
+        <input type="text" class="form-control" id="username" name="_username"/>
+    </div>
+
+    <div class="mb-3">
+        <label for="password" class="form-label">Mot de passe</label>
+        <input type="password" class="form-control" id="password" name="_password"/>
+    </div>
+
+    <div class="mb-3">
+        <label for="repeat_password" class="form-label">Répétez le mot de passe</label>
+        <input type="repeat_password" class="form-control" id="repeat_password" name="_repeat_password"/>
+    </div>
+
+    <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" name="_email"/>
+    </div>
+
+    <div class="mb-3">
+        <label for="address" class="form-label">Adresse</label>
+        <input type="address" class="form-control" id="address" name="_address"/>
+    </div>
+    
+    <div class="mb-3">
+        <label for="city" class="form-label">Ville</label>
+        <input type="city" class="form-control" id="city" name="_city"/>
+    </div>
+    
+    <div class="mb-3">
+        <label for="postal_code" class="form-label">Code postal</label>
+        <input type="postal_code" class="form-control" id="postal_code" name="_postal_code"/>
+    </div>
+    
+    <div class="mb-3">
+        <label for="phone" class="form-label">Numéro de téléphone</label>
+        <input type="phone" class="form-control" id="phone" name="_phone"/>
+    </div>
+
+    
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+    <div class="d-flex flex-wrap justify-content-between">
+        <button type="submit" class="btn btn-primary">Se connecter</button>
+        <a href="{{ path('app_register') }}" class="btn btn-success">Créer un compte</a>
+    </div>
+</form>
+{% endblock %}
