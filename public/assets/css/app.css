@@ -1,9 +1,25 @@
+@font-face{
+    font-family: 'Ineptic';
+    src: url('../../fonts/Ineptic.ttf');
+}
+h1, .navbar-brand{
+    font-family: 'Ineptic';
+}
+.text-small{font-size: 0.8em;}
 .bg-guitar{
     background: url('../../images/guitarist.jpg');
-    height: 50vh;
     background-size: cover;
+    background-position: center;
+    height: 50vh;
 }
 form{
     max-width: 500px;
     margin: 0 auto;
+}
+.vote button{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: none;
+    border: 1px solid lightgray;
 }

@@ -1,0 +1,24 @@
+<hr>
+{% if messages|length >=1 %}
+    {% for message in messages %}
+        <div class="d-flex align-items-center">
+            <div class="vote p-3">
+                <button>
+                    <img src="{{ asset('images/icons/thumbs-up.svg') }}">
+                </button>
+                {{ message.vote.up }}
+                <button>
+                    <img src="{{ asset('images/icons/thumbs-down.svg') }}">
+                </button>
+                {{ message.vote.down }}
+            </div>
+            <div>
+                <span class="text-small">Ajouté le {{ message.createdAt|date('d/m/Y H:i')|replace({' ': ' à ', ':':'h'}) }}</span>
+                <p>{{ message.content }}</p>
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>Aucun message n'a été ajouté à ce sujet</p>
+{% endif %}
+<hr>

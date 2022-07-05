@@ -5,6 +5,7 @@
 {% block body %}
 <h1 class="text-center">Créer un compte</h1>
 <form action="{{ path('app_register') }}" method="post">
+    <p class="h3">Information personnelle</p>
     <div class="mb-3">
         <label for="username" class="form-label">Pseudo</label>
         <input type="text" class="form-control" id="username" name="_username"/>
@@ -30,23 +31,22 @@
         <input type="address" class="form-control" id="address" name="_address"/>
     </div>
     
-    <div class="mb-3">
-        <label for="city" class="form-label">Ville</label>
-        <input type="city" class="form-control" id="city" name="_city"/>
-    </div>
-    
-    <div class="mb-3">
-        <label for="postal_code" class="form-label">Code postal</label>
-        <input type="postal_code" class="form-control" id="postal_code" name="_postal_code"/>
+    <div class="d-flex flex-wrap">
+        <div class="mb-3">
+            <label for="city" class="form-label">Ville</label>
+            <input type="city" class="form-control" id="city" name="_city"/>
+        </div>
+        
+        <div class="mb-3">
+            <label for="postal_code" class="form-label">Code postal</label>
+            <input type="postal_code" class="form-control" id="postal_code" name="_postal_code"/>
+        </div>
     </div>
     
     <div class="mb-3">
         <label for="phone" class="form-label">Numéro de téléphone</label>
         <input type="phone" class="form-control" id="phone" name="_phone"/>
     </div>
-
-    
-    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
     <div class="d-flex flex-wrap justify-content-between">
         <button type="submit" class="btn btn-primary">Se connecter</button>

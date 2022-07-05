@@ -13,11 +13,14 @@
     </head>
     <body>
         <main>
-            {% include 'navbar.html.twig' %}
+            {% include 'navbar.html.twig' %} {# include navbar #}
+            {# include home background #}
             {% if app.request.attributes.get('_route') == 'app_home' %}
                 <div class="wrapper bg-guitar"></div>
             {% endif %}
+            {# body #}
             <div class="container pt-2 p-3">
+                {% include "flash.html.twig" %} {# include flash message #}
                 {% block body %}{% endblock %}
             </div>
         </main>

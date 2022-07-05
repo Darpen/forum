@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un sujet{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+        {{ form_row(form.title) }}
+        {{ form_row(form.category) }}
+        <datalist id="categories">
+            {% for category in categories %}
+                <option value="{{category.title}}">
+            {% endfor %}
+        </datalist>
+    {{ form_end(form) }}
+{% endblock %}

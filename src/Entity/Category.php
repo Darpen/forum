@@ -2,12 +2,22 @@
 
 namespace App\Entity;
 
+use App\Entity\Trait\CreatedAtTrait;
+use App\Entity\Trait\UpdatedAtTrait;
 use App\Repository\CategoryRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Category
 {
+    use CreatedAtTrait;
+    use UpdatedAtTrait;
+
+    const ERROR_CREATE_MESSAGE = 'Vous devez ajouter une catégorie';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -16,8 +26,13 @@ class Category
     #[ORM\Column(type: 'string', length: 255)]
     private $title;
 
-    #[ORM\Column(type: 'datetime_immutable')]
-    private $createdAt;
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Topic::class)]
+    private $topics;
+
+    public function __construct()
+    {
+        $this->topics = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -36,14 +51,32 @@ class Category
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    /**
+     * @return Collection<int, Topic>
+     */
+    public function getTopics(): Collection
     {
-        return $this->createdAt;
+        return $this->topics;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    public function addTopic(Topic $topic): self
     {
-        $this->createdAt = $createdAt;
+        if (!$this->topics->contains($topic)) {
+            $this->topics[] = $topic;
+            $topic->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTopic(Topic $topic): self
+    {
+        if ($this->topics->removeElement($topic)) {
+            // set the owning side to null (unless already changed)
+            if ($topic->getCategory() === $this) {
+                $topic->setCategory(null);
+            }
+        }
 
         return $this;
     }
