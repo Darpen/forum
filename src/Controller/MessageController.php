@@ -19,14 +19,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class MessageController extends AbstractController
 {
     use VoteTrait;
-    private $createdAt;
 
     public function __construct(
         private EntityManagerInterface $em,
         private TopicRepository $topicRepository,
-    ){
-        $this->createdAt = new DateTimeImmutable('now', new DateTimeZone('Europe/Paris'));
-    }
+    ){}
 
     #[Route('/creation', name: 'create')]
     public function create(Request $request): Response
@@ -48,7 +45,7 @@ class MessageController extends AbstractController
             $message
                 ->setTopic($topic)
                 ->setVote($this->createVote())
-                ->setCreatedAt($this->createdAt);
+                ->setCreatedAt(new DateTimeImmutable('now', new DateTimeZone('Europe/Paris')));
             $this->em->persist($message);
             $this->em->flush();
 

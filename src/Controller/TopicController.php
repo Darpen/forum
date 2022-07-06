@@ -22,20 +22,20 @@ use Symfony\Component\Routing\Annotation\Route;
 class TopicController extends AbstractController
 {
     use CategoryTrait;
-    private $createdAt;
 
     public function __construct(
         private EntityManagerInterface $em,
         private CategoryRepository $categoryRepository,
         private MessageRepository $messageRepository,
         private TopicRepository $topicRepository
-    ){
-        $this->createdAt = new DateTimeImmutable('now', new DateTimeZone('Europe/Paris'));
-    }
+    ){}
 
     #[Route('/creation', name: 'create')]
     public function create(Request $request): Response
     {
+        if(!$this->isGranted('ROLE_USER')){
+            return $this->redirectToRoute('app_login');
+        }
         $topic = new Topic();
         $form = $this->createForm(TopicType::class, $topic);
         $form->handleRequest($request);
@@ -48,7 +48,8 @@ class TopicController extends AbstractController
             $topic = $form->getData();
             $topic
                 ->setCategory($category)
-                ->setCreatedAt($this->createdAt);
+                ->setUser($this->getUser())
+                ->setCreatedAt(new DateTimeImmutable('now', new DateTimeZone('Europe/Paris')));
             $this->em->persist($topic);
             $this->em->flush();
 

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\CategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,10 +11,15 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/category', name: 'category_')]
 class CategoryController extends AbstractController
 {
-    #[Route('/creation', name: 'create')]
-    public function create(Request $request): Response
+    public function __construct(
+        private CategoryRepository $categoryRepository
+    ){}
+
+    #[Route('/detail/{id}', name: 'show', requirements: ['id' => '\d+'])]
+    public function show(int $id): Response
     {
-        dump($request->request);
-        return $this->redirectToRoute('topic_create');
+        return $this->render('category/show.html.twig', [
+            'category' => $this->categoryRepository->find($id),
+        ]);
     }
 }

@@ -6,7 +6,15 @@
 <h1 class="text-center justify-center h3">Le forum pour les amoureux de la guitare et du metal</h1>
 <hr>
 <div class="d-flex flex-wrap justify-content-between align-items-center">
-    <p class="h4">Toutes les questions</p>
+    <p class="h4">Toutes les catégories</p>
     <a href="{{ path('topic_create') }}" class="btn btn-primary">Créer un sujet de discussion</a>
+</div>
+<hr>
+<div class="list-group">
+    {% for category in categories %}
+        <a href="{{ path('category_show', {'id': category.id}) }}" class="list-group-item list-group-item-action">
+            {{ category.title }} ({{ category.topics|length }}) 
+        </a>
+    {% endfor %}
 </div>
 {% endblock %}

@@ -21,9 +21,9 @@
         
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-        <div class="d-flex flex-wrap justify-content-between">
+        <div class="d-flex flex-wrap justify-content-between align-items-center">
             <button type="submit" class="btn btn-primary">Se connecter</button>
-            <a href="{{ path('app_register') }}" class="btn btn-success">Créer un compte</a>
+            <a href="{{ path('app_register') }}" class="text-dark">Vous n'avez pas de compte, enregistrez-vous</a>
         </div>
     </form>
 {% endblock %}

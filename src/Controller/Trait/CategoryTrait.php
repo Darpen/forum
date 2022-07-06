@@ -4,6 +4,8 @@ namespace App\Controller\Trait;
 
 use App\Entity\Category;
 use App\Repository\CategoryRepository;
+use DateTimeImmutable;
+use DateTimeZone;
 
 /**
  * construct need:
@@ -34,7 +36,7 @@ Trait CategoryTrait
         }
         $category
             ->setTitle($categoryTitle)
-            ->setCreatedAt($this->createdAt);
+            ->setCreatedAt(new DateTimeImmutable('now', new DateTimeZone('Europe/Paris')));
         $this->em->persist($category);
         return $category;
     }

@@ -21,6 +21,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     use UpdatedAtTrait;
     use ActiveTrait;
 
+    const INCORRECT_USERNAME_LENGTH = 'Le pseudo doit faire au minimum 6 caractères';
+    const INCORRECT_PASSWORD_LENGTH = 'Le mot de passe doit faire au minimum 6 caractères';
+    const INCORRECT_EMAIL = 'Email incorrect';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -63,11 +67,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Message::class)]
     private $messages;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $lastname;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $firstname;
+
     public function __construct()
     {
         $this->connectionHistories = new ArrayCollection();
         $this->topics = new ArrayCollection();
         $this->messages = new ArrayCollection();
+        $this->ban = false;
+        $this->active = true;
     }
 
     public function getId(): ?int
@@ -298,6 +310,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $message->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLastname(): ?string
+    {
+        return $this->lastname;
+    }
+
+    public function setLastname(?string $lastname): self
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function getFirstname(): ?string
+    {
+        return $this->firstname;
+    }
+
+    public function setFirstname(?string $firstname): self
+    {
+        $this->firstname = $firstname;
 
         return $this;
     }

@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier mes informations{% endblock %}
+
+{% block body %}
+<h1 class="text-center">Modifier mes informations</h1>
+
+{{ form_start(form) }}
+    {{ form_row(form.lastname) }}
+    {{ form_row(form.firstname) }}
+    {{ form_row(form.username) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.address) }}
+    <div class="d-flex flex-wrap justify-content-between">
+        {{ form_row(form.postalCode) }}
+        {{ form_row(form.city) }}
+    </div>
+    {{ form_row(form.phone) }}
+    <button type="submit" class="btn btn-primary">Modifier</button>
+    {{ form_row(form._token) }}
+{{ form_end(form, {'render_rest': false}) }}
+{% endblock %}

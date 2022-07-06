@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %Mon compte{% endblock %}
+
+{% block body %}
+<h1 class="text-center">Mon profil</h1>
+<div>
+    <p class="m-0">Nom : {{ user.lastname }}</p>
+    <p class="m-0">Prénom : {{ user.firstname }}</p>
+    <p class="m-0">Pseudo : {{ user.username }}</p>
+    <p class="m-0">Adresse : {{ user.address }}</p>
+    <p class="m-0">Code Postal : {{ user.postalCode }}</p>
+    <p class="m-0">Ville : {{ user.city }}</p>
+    <p class="m-0">Email : {{ user.email }}</p>
+    <p class="m-0">Numéro de téléphone : {{ user.phone }}</p>
+    <a href="{{ path('account_edit', {'id':app.user.id}) }}" class="btn btn-primary">Modifier mes informations personnelles</a>
+</div>
+<hr>
+
+<a href="{{ path('account_close', {'id':app.user.id}) }}" class="btn btn-danger">Cloturer mon compte</a>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ category.title }}{% endblock %}
+
+{% block body %}
+<h1 class="text-center">{{ category.title|replace({'é': 'E'}) }}</h1>
+<p>Liste des sujets</p>
+<ul>
+    {% for topic in category.topics %}
+        <li>
+            <b>{{ topic.title }}</b>
+            {% include "message/show.html.twig" with {'messages':topic.message} %}
+            <hr>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
