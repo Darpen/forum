@@ -1,11 +1,11 @@
-{% if topic.user == app.user and topic.state == 'OPENED' %}
-    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#closeTopic">
-        Clôturer le sujet
-    </button>
+{% if (topic.user == app.user or is_granted('ROLE_ADMIN')) and topic.state == 'OPENED' %}
+    <a class="text-warning" style="text-decoration:none;" data-bs-toggle="modal" data-bs-target="#closeTopic{{topic.id}}">
+        <b>Clôturer le sujet</b>
+    </a>
 {% endif %}
 
 <!-- Modal -->
-<div class="modal fade" id="closeTopic" tabindex="-1" role="dialog" aria-labelledby="closeTopicLabel"
+<div class="modal fade" id="closeTopic{{topic.id}}" tabindex="-1" role="dialog" aria-labelledby="closeTopicLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

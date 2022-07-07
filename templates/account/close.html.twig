@@ -2,12 +2,12 @@
 {% if is_granted('ROLE_ADMIN') and user != app.user %}
     {% set closeMessage = 'Clôturer le compte' %}
 {% endif %}
-<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#closeUserAccount">
+<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#closeUserAccount{{ user.id }}">
     {{ closeMessage }}
 </button>
 
 <!-- Modal -->
-<div class="modal fade" id="closeUserAccount" tabindex="-1" role="dialog" aria-labelledby="closeUserAccountLabel"
+<div class="modal fade" id="closeUserAccount{{ user.id }}" tabindex="-1" role="dialog" aria-labelledby="closeUserAccountLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

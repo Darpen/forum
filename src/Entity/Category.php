@@ -17,6 +17,7 @@ class Category
     use UpdatedAtTrait;
 
     const ERROR_CREATE_MESSAGE = 'Vous devez ajouter une catégorie';
+    const UPDATE_MESSAGE = 'Catégorie modifié !';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

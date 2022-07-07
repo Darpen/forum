@@ -60,10 +60,20 @@ class AccountController extends AbstractController
     {
         $this->checkAccess($this->getUser(), $id);
         $user = $this->userRepository->find($id);
-        $user->setActive(false);
+        $active = false;
+        $redirect = 'app_logout';
+        // L'administrateur peut bloquer/activer un utilisateur
+        if($this->isGranted('ROLE_ADMIN')){
+            $active = $user->isActive() ? false : true;
+            // L'administrateur bloque/active au autre utilisateur que lui
+            if($this->getUser() != $user){
+                $redirect = 'app_admin';
+            }
+        }
+        $user->setActive($active);
         $this->em->persist($user);
         $this->em->flush();
 
-        return $this->redirectToRoute('app_logout');
+        return $this->redirectToRoute($redirect);
     }
 }

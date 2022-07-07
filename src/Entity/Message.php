@@ -14,6 +14,8 @@ class Message
     use CreatedAtTrait;
     use UpdatedAtTrait;
 
+    const DELETE_MESSAGE = 'Message supprimé.';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -32,6 +34,9 @@ class Message
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'messages')]
     private $user;
+
+    #[ORM\Column(type: 'boolean')]
+    private $active;
 
     public function getId(): ?int
     {
@@ -82,6 +87,18 @@ class Message
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function isActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): self
+    {
+        $this->active = $active;
 
         return $this;
     }

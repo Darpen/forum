@@ -4,11 +4,17 @@
 
 {% block body %}
 <h1 class="text-center">{{ category.title|replace({'é': 'E'}) }}</h1>
+<div class="d-flex flex-wrap justify-content-between align-items-center">
+    <a href="{{ path('app_home') }}" class="btn btn-dark">Retour à l'accueil</a>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('category_edit', {'id': category.id}) }}" class="btn btn-primary">Modifier la catégorie</a>
+    {% endif %}
+</div>
 <p class="h4">Tout les sujets</p>
 <ul>
     {% for topic in category.topics %}
         <li>
-            <div class="d-flex justify-content-between align-items-center">
+            <div>
                 <div>
                     <b>{{ topic.title }}</b><br>
                     <span>{{ topic.createdAt|date('d/m/Y H:i')|replace({' ': ' à ', ':':'h'}) }} par {{ topic.user.username }}</span>
@@ -16,7 +22,7 @@
                 <div>
                     <a href="{{ path('topic_show', {'id': topic.id}) }}" class="btn btn-primary">
                         {% if topic.state == 'OPENED' %}
-                            Ajouter un message
+                            Voir le sujet
                         {% else %}
                             Voir les messages    
                         {% endif %}

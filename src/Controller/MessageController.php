@@ -6,6 +6,7 @@ use App\Controller\Trait\VoteTrait;
 use App\Entity\Message;
 use App\Entity\Topic;
 use App\Form\MessageType;
+use App\Repository\MessageRepository;
 use App\Repository\TopicRepository;
 use DateTimeImmutable;
 use DateTimeZone;
@@ -23,6 +24,7 @@ class MessageController extends AbstractController
     public function __construct(
         private EntityManagerInterface $em,
         private TopicRepository $topicRepository,
+        private MessageRepository $messageRepository
     ){}
 
     #[Route('/creation', name: 'create')]
@@ -55,5 +57,17 @@ class MessageController extends AbstractController
         return $this->render('message/index.html.twig', [
             'controller_name' => 'MessageController',
         ]);
+    }
+    
+    #[Route('/supprimer/{id}', name: 'delete', requirements: ['id' => '\d+'])]
+    public function delete(int $id): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $message = $this->messageRepository->find($id);
+        $message->setActive(false);
+        $this->em->persist($message);
+        $this->em->flush();
+        $this->addFlash('success', Message::DELETE_MESSAGE);
+        return $this->redirectToRoute('category_show', ['id' => $message->getTopic()->getCategory()->getId()]);
     }
 }

@@ -1,0 +1,30 @@
+<div class="circle"><button data-bs-toggle="modal" data-bs-target="#connectionHistory{{ user.id }}">{{ user.connectionHistories|length }}</button></div>
+
+<!-- Modal -->
+<div class="modal fade" id="connectionHistory{{ user.id }}" tabindex="-1" role="dialog" aria-labelledby="connectionHistoryLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="connectionHistoryLabel">Dernières connexions</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% if user.connectionHistories|length > 0 %}
+                    <div class="list-group">
+                        {% for connexion in user.connectionHistories %}
+                            <a class="list-group-item list-group-item-action">
+                                <span>IP : {{ connexion.userIp }} le {{ connexion.createdAt|date('d/m/Y H:i')|replace({' ': ' à ', ':':'h'}) }}</span> 
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    Pas de connexion    
+                {% endif %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

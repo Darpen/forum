@@ -13,7 +13,7 @@
 <div class="list-group">
     {% for category in categories %}
         <a href="{{ path('category_show', {'id': category.id}) }}" class="list-group-item list-group-item-action">
-            {{ category.title }} ({{ category.topics|length }}) 
+            <span>{{ category.title }} ({{ category.topics|length }} sujets)</span> 
         </a>
     {% endfor %}
 </div>
