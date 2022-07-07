@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %Mon compte{% endblock %}
+{% block title %}Mon compte{% endblock %}
 
 {% block body %}
 <h1 class="text-center">Mon profil</h1>
@@ -16,6 +16,5 @@
     <a href="{{ path('account_edit', {'id':app.user.id}) }}" class="btn btn-primary">Modifier mes informations personnelles</a>
 </div>
 <hr>
-
-<a href="{{ path('account_close', {'id':app.user.id}) }}" class="btn btn-danger">Cloturer mon compte</a>
+{% include "account/close.html.twig" %}
 {% endblock %}

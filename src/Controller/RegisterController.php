@@ -49,6 +49,7 @@ class RegisterController extends AbstractController
             $user
                 ->setUsername(trim($user->getUsername()))
                 ->setPassword($hashedPassword)
+                ->setRoles(['ROLE_USER'])
                 ->addConnectionHistory($this->createConnectionHistory($request))
                 ->setCreatedAt(new DateTimeImmutable('now', new DateTimeZone('Europe/Paris')));
             $this->em->persist($user);

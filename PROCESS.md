@@ -4,6 +4,7 @@
 - installation de composer
 
 # Utils
+composer require --dev orm-fixtures
 composer require --dev symfony/profiler-pack
 
 

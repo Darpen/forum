@@ -1,0 +1,25 @@
+{% if topic.user == app.user and topic.state == 'OPENED' %}
+    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#closeTopic">
+        Clôturer le sujet
+    </button>
+{% endif %}
+
+<!-- Modal -->
+<div class="modal fade" id="closeTopic" tabindex="-1" role="dialog" aria-labelledby="closeTopicLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="closeTopicLabel">Clôturer un sujet</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Voulez-vous clôturer le sujet "{{ topic.title }}" ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a href="{{ path('topic_close', {'id': topic.id}) }}" class="btn btn-warning">Clôturer le sujet</a>
+            </div>
+        </div>
+    </div>
+</div>

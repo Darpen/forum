@@ -4,10 +4,8 @@ namespace App\Controller;
 
 use App\Controller\Trait\SecurityTrait;
 use App\Controller\Trait\UserTrait;
-use App\Entity\User;
 use App\Form\RegisterType;
 use App\Repository\UserRepository;
-use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -62,9 +60,10 @@ class AccountController extends AbstractController
     {
         $this->checkAccess($this->getUser(), $id);
         $user = $this->userRepository->find($id);
-        $this->em->remove($user);
+        $user->setActive(false);
+        $this->em->persist($user);
         $this->em->flush();
 
-        return $this->redirectToRoute('app_home');
+        return $this->redirectToRoute('app_logout');
     }
 }

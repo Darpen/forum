@@ -1,0 +1,27 @@
+{% set closeMessage = 'Clôturer mon compte' %}
+{% if is_granted('ROLE_ADMIN') and user != app.user %}
+    {% set closeMessage = 'Clôturer le compte' %}
+{% endif %}
+<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#closeUserAccount">
+    {{ closeMessage }}
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="closeUserAccount" tabindex="-1" role="dialog" aria-labelledby="closeUserAccountLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="closeUserAccountLabel">Clôturer un sujet</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Voulez-vous clôturer votre compte ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a href="{{ path('account_close', {'id':app.user.id}) }}" class="btn btn-danger">{{ closeMessage }}</a>
+            </div>
+        </div>
+    </div>
+</div>

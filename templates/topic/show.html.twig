@@ -4,14 +4,22 @@
 
 {% block body %}
     <h1>{{ topic.title }}</h1>
-    <div>Créé le {{ topic.createdAt|date('d/m/Y H:i')|replace({' ': ' à ', ':':'h'}) }}</div>
+    <div class="d-flex justify-content-between align-items-center">
+        <span>Créé le {{ topic.createdAt|date('d/m/Y H:i')|replace({' ': ' à ', ':':'h'}) }} par {{ topic.user.username }}</span>
+        {% include "topic/close.html.twig" %}
+    </div>
+    
     <div id="js_show_messages">
         {% include "message/show.html.twig" %}
     </div>
-    <p><b>Vous pouvez ajouter un message</b></p>
-    {{ form_start(form) }}
-        <input type="hidden" name="topic" value="{{topic.id}}">
-    {{ form_end(form) }}
+    {% if topic.state == 'OPENED' %}
+        <p><b>Vous pouvez ajouter un message</b></p>
+        {{ form_start(form) }}
+            <input type="hidden" name="topic" value="{{topic.id}}">
+        {{ form_end(form) }}
+    {% else %}
+        <p class="alert alert-warning">Le sujet est cloturé</p>    
+    {% endif %}
 {% endblock %}
 
 {% block javascripts %}

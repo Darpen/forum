@@ -45,7 +45,8 @@ class MessageController extends AbstractController
             $message
                 ->setTopic($topic)
                 ->setVote($this->createVote())
-                ->setCreatedAt(new DateTimeImmutable('now', new DateTimeZone('Europe/Paris')));
+                ->setCreatedAt(new DateTimeImmutable('now', new DateTimeZone('Europe/Paris')))
+                ->setUser($this->getUser());
             $this->em->persist($message);
             $this->em->flush();
 

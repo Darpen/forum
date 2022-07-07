@@ -13,7 +13,7 @@
                 {{ message.vote.down }}
             </div>
             <div>
-                <span class="text-small">Ajouté le {{ message.createdAt|date('d/m/Y H:i')|replace({' ': ' à ', ':':'h'}) }}</span>
+                <span class="text-small">Ajouté le {{ message.createdAt|date('d/m/Y H:i')|replace({' ': ' à ', ':':'h'}) }} par {{ message.user.username }}</span>
                 <p>{{ message.content }}</p>
             </div>
         </div>

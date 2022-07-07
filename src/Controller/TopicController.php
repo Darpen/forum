@@ -71,7 +71,7 @@ class TopicController extends AbstractController
                 'warning',
                 Topic::NOT_FOUND_MESSAGE
             );
-            $this->redirectToRoute('topic_create');
+            return $this->redirectToRoute('topic_create');
         }
 
         $message = new Message();
@@ -85,5 +85,23 @@ class TopicController extends AbstractController
             'messages' => $this->messageRepository->findBy(['topic'=>$topic],['created_at'=>'DESC']),
             'form' => $form
         ]);
+    }
+
+    #[Route('/cloturer/{id}', name: 'close', requirements: ['id' => '\d+'])]
+    public function close(int $id): Response
+    {
+        $topic = $this->topicRepository->find($id);
+        if(is_null($topic)){
+            $this->addFlash(
+                'warning',
+                Topic::NOT_FOUND_MESSAGE
+            );
+            $this->redirectToRoute('topic_create');
+        }
+        $topic->setState(Topic::CLOSED);
+        $this->em->persist($topic);
+        $this->em->flush();
+
+        return $this->redirectToRoute('category_show',['id'=>$topic->getCategory()->getId()]);
     }
 }
