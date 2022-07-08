@@ -19,6 +19,16 @@ Dans le fichier .env => Modifier le nom de la base de donnée dans la variable D
   DATABASE_URL="mysql://root:@127.0.0.1/ma_bdd"
 ```
 
+## Lancer la migration dans la bdd
+```
+  symfony console doctrine:migrations:migrate
+```
+
+## Lancer les fixtures
+```
+  symfony console doctrine:fixtures:load
+```
+
 ## Lancer le projet
 ```
   symfony server:start
