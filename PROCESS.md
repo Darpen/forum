@@ -23,7 +23,7 @@
 - Requête sur les entités avec les méthodes par défaut des Repository : findAll(), findBy(), count()
 
 # Bonus
-## Connexion utilisateur
+## Historique de connexion utilisateur
 - Création d'une table jointe à user ConnectionHistories
 - Création d'un eventListener pour écouter l'action de connexion de l'utilisateur
 - On récupère son adresse via l'event->request et on ajoute dans la table jointe à chaque connexion de l'utilisateur et lors de la création de compte
