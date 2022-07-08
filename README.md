@@ -2,6 +2,8 @@
 
 ## Requis
 - PHP 8.1
+- Composer 2.1+
+- Symfony CLI 5.4+
 
 ## Récupérer le projet
 - Créer un nouveau dossier
