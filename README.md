@@ -14,7 +14,8 @@
 ```
 
 ## Mettre à jour la relation à la base de donnée
-Dans le fichier .env => Modifier le nom de la base de donnée dans la variable DATABASE_URL
+- Créer une base de donnée
+- Dans le fichier .env => Modifier le nom de la base de donnée dans la variable DATABASE_URL
 ```
   DATABASE_URL="mysql://root:@127.0.0.1/ma_bdd"
 ```
