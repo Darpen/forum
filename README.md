@@ -8,7 +8,7 @@
   git clone https://github.com/Darpen/forum.git
 ```
 
-## Aller dans le dossier récupéré puis lancer la commande
+## Aller dans le dossier récupéré, puis lancer la commande
 ```
   composer install
 ```
