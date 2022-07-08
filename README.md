@@ -24,7 +24,7 @@
 ```
   DATABASE_URL="mysql://root:@127.0.0.1/metal_world"
 ```
-## Si vous n'avez pas la même configuration
+## !!! Si vous n'avez pas la même configuration !!!
 - Changer le système de gestion de base de donnée si vous n'êtes pas en "mysql"
 - Changer le pseudo et mot de passe de connexion
 - Changer l'adresse IP d'accès à phpmyadmin
