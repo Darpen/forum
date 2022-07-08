@@ -7,8 +7,8 @@
 - Créer un nouveau dossier
 ```
   cd mon_nouveau_dossier
-  git clone https://github.com/Darpen/forum.git
-  cd mon_dossier_clone
+  git clone https://github.com/Darpen/forum.git forum
+  cd forum
 ```
 
 ## Aller dans le dossier récupéré, puis lancer la commande
