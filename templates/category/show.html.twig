@@ -11,6 +11,7 @@
     {% endif %}
 </div>
 <p class="h4">Tout les sujets</p>
+<hr>
 <ul>
     {% for topic in category.topics %}
         <li>
@@ -30,8 +31,8 @@
                     {% include "topic/close.html.twig" %}
                 </div>
             </div>
-            {% include "message/show.html.twig" with {'messages':topic.message} %}
         </li>
+        <hr>
     {% endfor %}
 </ul>
 {% endblock %}

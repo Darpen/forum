@@ -73,6 +73,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $firstname;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserVote::class)]
+    private $userVotes;
+
     public function __construct()
     {
         $this->connectionHistories = new ArrayCollection();
@@ -80,6 +83,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->messages = new ArrayCollection();
         $this->ban = false;
         $this->active = true;
+        $this->userVotes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -334,6 +338,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setFirstname(?string $firstname): self
     {
         $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserVote>
+     */
+    public function getUserVotes(): Collection
+    {
+        return $this->userVotes;
+    }
+
+    public function addUserVote(UserVote $userVote): self
+    {
+        if (!$this->userVotes->contains($userVote)) {
+            $this->userVotes[] = $userVote;
+            $userVote->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserVote(UserVote $userVote): self
+    {
+        if ($this->userVotes->removeElement($userVote)) {
+            // set the owning side to null (unless already changed)
+            if ($userVote->getUser() === $this) {
+                $userVote->setUser(null);
+            }
+        }
 
         return $this;
     }

@@ -1,29 +1,27 @@
 <hr>
 {% if messages|length >=1 %}
     {% for message in messages %}
-        {% if message.active %}
-            <div class="d-flex align-items-center">
-                <div class="circle p-3">
-                    <button>
-                        <img src="{{ asset('images/icons/thumbs-up.svg') }}">
-                    </button>
-                    {{ message.vote.up }}
-                    <button>
-                        <img src="{{ asset('images/icons/thumbs-down.svg') }}">
-                    </button>
-                    {{ message.vote.down }}
-                </div>
-                <div>
-                    <div class="d-flex justify-content-between">
-                        <span class="text-small">Ajouté le {{ message.createdAt|date('d/m/Y H:i')|replace({' ': ' à ', ':':'h'}) }} par {{ message.user.username }}</span>
-                        {% if is_granted('ROLE_ADMIN') %}
-                            {% include "message/delete.html.twig" %}
-                        {% endif %}
-                    </div>
-                    <p>{{ message.content }}</p>
-                </div>
+        <div class="d-flex align-items-center message-display">
+            <div class="circle p-3" style="min-width: 100px">
+                <button class="js_vote {% if message.vote.upChecked %} bg-success {% endif %}" data-message="{{ message.id }}" data-action="up">
+                    <img style="pointer-events:none" src="{{ asset('images/icons/thumbs-up.svg') }}">
+                </button>
+                {{ message.vote.up }}
+                <button class="js_vote {% if message.vote.downChecked %} bg-danger {% endif %}" data-message="{{ message.id }}" data-action="down">
+                    <img style="pointer-events:none" src="{{ asset('images/icons/thumbs-down.svg') }}">
+                </button>
+                {{ message.vote.down }}
             </div>
-        {% endif %}
+            <div>
+                <div class="d-flex justify-content-between">
+                    <span class="text-small">Ajouté le {{ message.createdAt|date('d/m/Y H:i')|replace({' ': ' à ', ':':'h'}) }} par {{ message.author }}</span>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        {% include "message/delete.html.twig" %}
+                    {% endif %}
+                </div>
+                <p>{{ message.content }}</p>
+            </div>
+        </div>
     {% endfor %}
 {% else %}
     <p>Aucun message n'a été ajouté à ce sujet</p>

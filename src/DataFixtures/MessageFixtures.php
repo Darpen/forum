@@ -6,7 +6,7 @@ use App\DataFixtures\Trait\DateTimeTrait;
 use App\Entity\Message;
 use App\Entity\Topic;
 use App\Entity\User;
-use App\Entity\Vote;
+use App\Entity\UserVote;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Faker\Factory;
 use Faker\Generator;
@@ -37,23 +37,28 @@ class MessageFixtures extends Fixture implements DependentFixtureInterface
                     ->setContent($this->faker->realText())
                     ->setTopic($randomTopic)
                     ->setUser($randomUser)
-                    ->setVote($this->createVote($manager))
                     ->setActive(true)
                     ->setCreatedAt($this->randomDate());
                 $manager->persist($message);
+
+                // Pour chaque message l'utilisateur à une chance de voter soit up ou down
+                if(random_int(0,1) === 1){
+                    $this->createUserVote($manager, $randomUser, $message);
+                }
             }
         }
         $manager->flush();
     }
 
-    private function createVote(ObjectManager $manager):Vote
+    private function createUserVote(ObjectManager $manager, User $user, Message $message):void
     {
-        $vote = new Vote();
-        $vote
-            ->setUp(random_int(0,100))
-            ->setDown(random_int(0,100));
-        $manager->persist($vote);
-        return $vote;
+        $action = random_int(0,1) === 1 ? UserVote::UP : UserVote::DOWN;
+        $userVote = new UserVote();
+        $userVote
+            ->setUser($user)
+            ->setMessage($message)
+            ->setAction($action);
+        $manager->persist($userVote);
     }
 
     public function getDependencies()

@@ -28,3 +28,7 @@ form{
     background: none;
     border: 1px solid lightgray;
 }
+
+@media screen and (max-width: 800px) {
+    .message-display{ flex-direction: column-reverse; }
+}

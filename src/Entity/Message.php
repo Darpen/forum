@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Entity\Trait\CreatedAtTrait;
 use App\Entity\Trait\UpdatedAtTrait;
 use App\Repository\MessageRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MessageRepository::class)]
@@ -28,15 +30,19 @@ class Message
     #[ORM\JoinColumn(nullable: false)]
     private $topic;
 
-    #[ORM\OneToOne(targetEntity: Vote::class, cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private $vote;
-
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'messages')]
     private $user;
 
     #[ORM\Column(type: 'boolean')]
     private $active;
+
+    #[ORM\OneToMany(mappedBy: 'message', targetEntity: UserVote::class)]
+    private $userVotes;
+
+    public function __construct()
+    {
+        $this->userVotes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -67,18 +73,6 @@ class Message
         return $this;
     }
 
-    public function getVote(): ?Vote
-    {
-        return $this->vote;
-    }
-
-    public function setVote(Vote $vote): self
-    {
-        $this->vote = $vote;
-
-        return $this;
-    }
-
     public function getUser(): ?User
     {
         return $this->user;
@@ -99,6 +93,36 @@ class Message
     public function setActive(bool $active): self
     {
         $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserVote>
+     */
+    public function getUserVotes(): Collection
+    {
+        return $this->userVotes;
+    }
+
+    public function addUserVote(UserVote $userVote): self
+    {
+        if (!$this->userVotes->contains($userVote)) {
+            $this->userVotes[] = $userVote;
+            $userVote->setMessage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserVote(UserVote $userVote): self
+    {
+        if ($this->userVotes->removeElement($userVote)) {
+            // set the owning side to null (unless already changed)
+            if ($userVote->getMessage() === $this) {
+                $userVote->setMessage(null);
+            }
+        }
 
         return $this;
     }

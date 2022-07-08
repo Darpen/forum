@@ -2,7 +2,7 @@
 
 namespace App\Controller\Trait;
 
-use App\Entity\Vote;
+use App\Entity\UserVote;
 
 /**
  * construct need:
@@ -11,13 +11,21 @@ use App\Entity\Vote;
 Trait VoteTrait
 {
     /**
-     * @return Vote
+     * @return string|null
      */
-    protected function createVote():Vote
+    protected function getVoteAction(?UserVote $userVote, string $action):?string
     {
-        $vote = new Vote();
-        $vote->setUp(0)->setDown(0);
-        $this->em->persist($vote);
+        if(is_null($userVote)){
+            $vote = $action === 'up' ? UserVote::UP : UserVote::DOWN;
+        }elseif($userVote->getAction() === UserVote::UP && $action === 'up'){
+            $vote = null;
+        }elseif($userVote->getAction() === UserVote::DOWN && $action === 'down'){
+            $vote = null;
+        }elseif($userVote->getAction() === UserVote::DOWN && $action === 'up'){
+            $vote = UserVote::UP;
+        }elseif($userVote->getAction() === UserVote::UP && $action === 'down'){
+            $vote = UserVote::DOWN;
+        }
         return $vote;
     }
 }

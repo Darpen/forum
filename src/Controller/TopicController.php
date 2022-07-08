@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Controller\Trait\CategoryTrait;
+use App\Controller\Trait\MessageTrait;
 use App\Entity\Message;
 use App\Entity\Topic;
 use App\Form\MessageType;
@@ -10,6 +11,7 @@ use App\Form\TopicType;
 use App\Repository\CategoryRepository;
 use App\Repository\MessageRepository;
 use App\Repository\TopicRepository;
+use App\Repository\UserVoteRepository;
 use DateTimeImmutable;
 use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,12 +24,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class TopicController extends AbstractController
 {
     use CategoryTrait;
+    use MessageTrait;
 
     public function __construct(
         private EntityManagerInterface $em,
         private CategoryRepository $categoryRepository,
         private MessageRepository $messageRepository,
-        private TopicRepository $topicRepository
+        private TopicRepository $topicRepository,
+        private UserVoteRepository $userVoteRepository,
     ){}
 
     #[Route('/creation', name: 'create')]
@@ -82,7 +86,7 @@ class TopicController extends AbstractController
 
         return $this->renderForm('topic/show.html.twig', [
             'topic' => $topic,
-            'messages' => $this->messageRepository->findBy(['topic'=>$topic],['created_at'=>'DESC']),
+            'messages' => $this->getMessages($this->getUser(), $topic),
             'form' => $form
         ]);
     }
